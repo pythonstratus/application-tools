@@ -1,0 +1,77 @@
+-- ============================================================================
+-- Application Tools - Oracle Database Schema
+-- ============================================================================
+-- Tables: ENTEMP (existing), ENTITY_USER (existing)
+-- This script is for REFERENCE ONLY since these tables already exist.
+-- No DDL changes needed — this service reads/writes to existing tables.
+-- ============================================================================
+
+-- ENTEMP Table Structure (39 columns, no formal PK — composite ROID + SEID)
+-- ============================================================================
+-- CREATE TABLE SCHEMA_NAME.ENTEMP (
+--     ROID            NUMBER(8),          -- Assignment Number
+--     NAME            VARCHAR2(35),       -- Employee Name (First Last)
+--     GRADE           NUMBER(2),          -- User Grade
+--     TYPE            CHAR(1),
+--     ICSACC          CHAR(1),
+--     BADGE           VARCHAR2(10),
+--     TITLE           VARCHAR2(25),       -- Job Title
+--     AREACD          NUMBER(3),          -- Phone Area Code
+--     PHONE           NUMBER(7),          -- Phone Number
+--     EXT             NUMBER(7),
+--     SEID            CHAR(5),            -- SEID
+--     EMAIL           VARCHAR2(50),
+--     POSTYPE         CHAR(1),            -- ICS Position Type
+--     AREA            CHAR(1),
+--     TOUR            NUMBER(1),
+--     PODIND          CHAR(1),
+--     TPSIND          CHAR(1),
+--     CSUIND          CHAR(1),
+--     AIDEIND         CHAR(1),
+--     FLEXIND         CHAR(1),
+--     EMPDT           DATE,
+--     ADJDT           DATE,
+--     ADJREASON       CHAR(4),
+--     ADJPERCENT      NUMBER(3),
+--     PREVID          NUMBER(8),
+--     EACTIVE         CHAR(1),            -- Active flag (Y/N)
+--     UNIX            VARCHAR2(8),        -- Unix Login
+--     ELEVEL          NUMBER(1),          -- Level
+--     EXTRDT          DATE,
+--     PRIMARY_ROID    VARCHAR2(1),        -- Primary ID (Y/N)
+--     PODCD           CHAR(3),
+--     ORG             CHAR(2),            -- Organization code
+--     LASTLOGIN       DATE,
+--     GS9CNT          NUMBER(4),
+--     GS11CNT         NUMBER(4),
+--     GS12CNT         NUMBER(4),
+--     GS13CNT         NUMBER(4),
+--     LOGOFF          DATE,
+--     IP_ADDR         VARCHAR2(39)
+-- );
+
+-- ENTITY_USER Table Structure (12 columns, PK = ENTITY_USER_ID)
+-- ============================================================================
+-- CREATE TABLE SCHEMA_NAME.ENTITY_USER (
+--     ENTITY_USER_ID  NUMBER          NOT NULL,   -- PK
+--     USER_SEID       VARCHAR2(50),               -- Links to ENTEMP.SEID
+--     USER_NAME       VARCHAR2(50),
+--     LOGIN_DATE      DATE            DEFAULT SYSDATE,  -- Last Access Date
+--     CREATE_DATE     DATE,
+--     CREATE_USER     VARCHAR2(30),
+--     UPDATE_DATE     DATE            DEFAULT SYSDATE,
+--     UPDATE_USER     VARCHAR2(30),
+--     ISSTAFF         VARCHAR2(5),
+--     ISLOCKED        VARCHAR2(5),
+--     PASSWORD        NVARCHAR2(10)   DEFAULT 'ABCDE12345',
+--     ORG             CHAR(2),
+--     CONSTRAINT PK_ENTITY_USER PRIMARY KEY (ENTITY_USER_ID)
+-- );
+
+-- Recommended Indexes (if not already present)
+-- ============================================================================
+-- CREATE INDEX SCHEMA_NAME.IDX_ENTEMP_ROID ON SCHEMA_NAME.ENTEMP (ROID);
+-- CREATE INDEX SCHEMA_NAME.IDX_ENTEMP_SEID ON SCHEMA_NAME.ENTEMP (SEID);
+-- CREATE INDEX SCHEMA_NAME.IDX_ENTEMP_NAME ON SCHEMA_NAME.ENTEMP (NAME);
+-- CREATE INDEX SCHEMA_NAME.IDX_ENTEMP_ORG ON SCHEMA_NAME.ENTEMP (ORG);
+-- CREATE INDEX SCHEMA_NAME.IDX_ENTITY_USER_SEID ON SCHEMA_NAME.ENTITY_USER (USER_SEID);
